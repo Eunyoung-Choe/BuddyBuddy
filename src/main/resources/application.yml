@@ -11,7 +11,7 @@ spring:
 # mysql setting
   datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://db-324ob8-kr.vpc-pub-cdb.ntruss.com:3306/studydb?serverTimezone=Asia/Seoul
+      url: jdbc:mysql://db-324o9b-kr.vpc-pub-cdb.ntruss.com:3306/studydb?serverTimezone=Asia/Seoul
       username: study
       password: bitcamp!@#123
 
