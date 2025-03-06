@@ -7,7 +7,11 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+<<<<<<< HEAD
 		return application.sources(BuddybuddyMvcApplication.class);
+=======
+		return application.sources(SpringBuddyMvcApplication.class);
+>>>>>>> branch 'main' of https://github.com/Eunyoung-Choe/BuddyBuddy.git
 	}
 
 }

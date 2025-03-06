@@ -9,10 +9,16 @@
       <relativePath/> <!-- lookup parent from repository -->
    </parent>
    <groupId>com.example</groupId>
+
    <artifactId>buddybuddyMVC</artifactId>
    <version>0.0.1-SNAPSHOT</version>
    <packaging>war</packaging>
    <name>buddybuddyMVC</name>
+   <artifactId>SpringBuddyMVC</artifactId>
+   <version>0.0.1-SNAPSHOT</version>
+   <packaging>war</packaging>
+   <name>SpringBuddyMVC</name>
+
    <description>Demo project for Spring Boot</description>
    <url/>
    <licenses>
