@@ -14,6 +14,8 @@ spring:
       url: jdbc:mysql://db-324o9b-kr.vpc-pub-cdb.ntruss.com:3306/studydb?serverTimezone=Asia/Seoul
       username: study
       password: bitcamp!@#123
+  application:
+    name: SpringBuddyMVC
 
 # mybatis setting
 mybatis:

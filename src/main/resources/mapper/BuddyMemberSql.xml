@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mapper.BuddyMemberMapper">
+
+	<!-- 회원 정보를 uid로 조회 -->
+    <select id="getBuddyMemberByUid" parameterType="String" resultType="BuddyMemberDto">
+        SELECT num, uname, uid, upass, uprofile, gaipday FROM buddymember WHERE uid = #{uid}
+    </select>
+
+
+	<select id="checkUid" parameterType="String" resultType="int">
+      select count(*) from buddymember where uid=#{uid}
+   </select> <!-- count(*)이라서 resultType이 int -->
+   
+   <insert id="insertBuddyMember" parameterType="BuddyMemberDto">
+   		insert into buddymember (uname, upass, uid, uprofile, gaipday)
+   			values (#{uname}, #{upass}, #{uid}, #{uprofile}, now())
+   </insert>
+   
+   
+   <!-- 로그인 -->
+   <select id="loginCheck" parameterType="Map" resultType="int">
+   		select count(*) from buddymember where uid=#{loginid} and upass=#{loginpass}
+   </select>
+   <select id="getSelectByUid" parameterType="String" resultType="BuddyMemberDto">
+   		select * from buddymember where uid=#{uid}
+   </select>
+   
+</mapper>
