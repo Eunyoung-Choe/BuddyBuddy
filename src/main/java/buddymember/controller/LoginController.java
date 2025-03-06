@@ -24,12 +24,12 @@ public class LoginController {
 			)
 	{
 		Map<String, String> map = new HashMap<>();
-		boolean b = buddyMemberService.loginCheck(loginid, loginpass);
-		// 아이디와 비번이 맞을 경우 세션 저장
+		boolean b = buddyMemberService.loginCheck(loginid, loginpass); // 로그인 성공 여부를 클라이언트에 JSON 형태로 전달
+		// 아이디와 비번이 맞을 경우 세션에 저장
 		if(b) {
 			session.setMaxInactiveInterval(60*60*4); // 4시간 유지
 			session.setAttribute("loginstatus", "success");
-			session.setAttribute("loginid", loginid); // title.jsp 참고
+			session.setAttribute("loginid", loginid);
 			
 			// 아이디에 해당하는 프로필 사진 얻기
 			String photo = buddyMemberService.getSelectByUid(loginid).getUprofile();

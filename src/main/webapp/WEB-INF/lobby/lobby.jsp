@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>BuddyBuddy</title>
+<title>My BuddyBuddy</title>
 <link
 	href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Gaegu&family=Jua&family=Nanum+Pen+Script&family=Playwrite+AU+SA:wght@100..400&family=Single+Day&display=swap"
 	rel="stylesheet">
@@ -89,7 +89,7 @@
 				onerror="this.src='lobby/defaultprofile.png'" style="width:100%">
 		</div>
 		
-		<!-- 프로필 정보란 -->
+		<!-- 프로필 유저 정보 -->
 		<div class="profilecontent" alt="profilecontent">
 			<h6>이름: ${dto.uname }</h6>
 			<h6>가입일: <fmt:formatDate value="${dto.gaipday}" pattern="yyyy-MM-dd HH:mm"/></h6>
@@ -109,7 +109,10 @@
 	<!-- 3라인 컨테이너 -->
 	<div class="thirdcontainer">
 		<div class="minihomecontainer">
-			<span>(유저명)의 미니 홈피</span>
+			<c:if test="${sessionScope.loginstatus!=null}">
+				<span>${sessionScope.loginid}의 미니 홈피</span>
+			</c:if>
+			
 			<hr>
 			<div class="minihome" style="width:590px;">
 				<img alt="minihome" src="/lobby/minihome.png" style="width:100%;">

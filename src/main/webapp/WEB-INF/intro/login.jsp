@@ -113,7 +113,7 @@ body {
 					
 					//로그인 성공 시 아래 페이지 로드
 					// alert("로그인 테스트 중"); // 작동 OK
-					window.location.href = "${root}/"; // 페이지 경로 바꾸고 여기도 바꿔야 함ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ
+					window.location.href = "${root}/lobby";
 				}else{
 					alert("아이디나 비밀번호가 맞지 않습니다");
 					$("#loginpass").val("");
