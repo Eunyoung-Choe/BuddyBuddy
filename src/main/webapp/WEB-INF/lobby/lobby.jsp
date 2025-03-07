@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My BuddyBuddy</title>
+<title>My BuddyBuddy Hompy</title>
 <link
 	href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Gaegu&family=Jua&family=Nanum+Pen+Script&family=Playwrite+AU+SA:wght@100..400&family=Single+Day&display=swap"
 	rel="stylesheet">
@@ -91,8 +91,8 @@
 		
 		<!-- 프로필 유저 정보 -->
 		<div class="profilecontent" alt="profilecontent">
-			<h6>이름: ${dto.uname }</h6>
-			<h6>가입일: <fmt:formatDate value="${dto.gaipday}" pattern="yyyy-MM-dd HH:mm"/></h6>
+			<h6>₊‧°𐐪 ${dto.uid} 𐑂°‧₊</h6>
+			<h6>✿ 홈피 분양일 ✿<br><fmt:formatDate value="${dto.gaipday}" pattern="yyyy-MM-dd HH:mm"/></h6>
 		</div>
 	</div>
 	
@@ -102,6 +102,14 @@
 		<div class="todolist">
 			To Do List
 		</div>
+		
+		
+		<!-- dto. 출력 테스트 중================================================================= 
+		<c:forEach var="dto" items="${members }">
+			${dto.uid }
+		</c:forEach>-->
+		
+		
 	</div>
 	
 	

@@ -2,7 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="data.mapper.BuddyMemberMapper">
 
-	<!-- 회원 정보를 uid로 조회 -->
+	<!-- DTO에 담긴 회원 데이터 출력 (맞나?) -->
+	<select id="getAllMembers" resultType="BuddyMemberDto">
+		select * from buddymember order by num
+	</select>
+	
+
+	<!-- 특정 회원 정보를 uid로 조회 -->
     <select id="getBuddyMemberByUid" parameterType="String" resultType="BuddyMemberDto">
         SELECT num, uname, uid, upass, uprofile, gaipday FROM buddymember WHERE uid = #{uid}
     </select>
