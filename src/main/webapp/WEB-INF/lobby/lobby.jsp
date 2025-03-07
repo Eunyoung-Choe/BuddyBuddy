@@ -80,10 +80,10 @@
 
 <body>
 <div class="container">
-	<!-- 네비게이션 -->
+	<!-- 네비게이션 ==================================================-->
 
 	
-	<!-- 프로필 -->
+	<!-- 프로필 ==================================================-->
 	<div class="profilecontainer">
 		<div class="profilephoto" alt="profilephoto" style="width:100%; height:250px; margin-bottom:10px;">
 			<!-- 프로필 이미지 -->
@@ -99,46 +99,55 @@
 	</div>
 	
 
-	<!-- 2라인 컨테이너 -->
+
+	<!-- 2라인 컨테이너 ==================================================-->
 	<div class="secondcontainer">
 		<div class="todolist">
 			To Do List
 		</div>
 		
-		
-		<!-- dto. 출력 테스트 중================================================================= 
+		<!-- dto. 출력 테스트 중
 		<c:forEach var="dto" items="${members }">
 			${dto.uid }
 		</c:forEach>-->
-		
 		
 	</div>
 	
 	
 	
-	<!-- 3라인 컨테이너 -->
+	<!-- 3라인 컨테이너 ==================================================-->
 	<div class="thirdcontainer">
 		<div class="minihomecontainer">
 			<c:if test="${sessionScope.loginstatus!=null}">
 				<span>${sessionScope.loginid}의 미니 홈피</span>
 			</c:if>
 			
-			<hr>
-			<div class="minihome" style="width:590px;">
+			<!-- 미니홈 이미지 -->
+			<div class="minihome" style="width:590px; margin-top:5px;">
 				<!-- 로그인 한 user에 따라 미니홈이 다르게 뜨도록 설정 -->
 				<img alt="minihome" src="/lobby/minihome${dto.num}.gif" style="width:100%;">
 			</div>
+			
+			<!-- 한마디 남기기 -->
+			<div class="lobbyboard">
+				<h6 style="margin-top:8px;">한마디 남기기</h6> 
+				<hr style="margin:3px;">
+				
+				<!-- 한마디 입력란 -->
+				<div class="lobbyboardinput">
+					<input type="text" class="input-sentence" id="sentence" placeholder="오늘의 한마디" style="width:520px; display:inline-block;">
+					<button type="button" class="sentence-save" id="btnsave" style="width:63px; background-color:#77BB31">게시</button>
+				</div>
+				
+				<!-- 한마디 목록 -->
+				<div class="lobbyboardlist">목록</div>
+			</div>
+			
 		</div>
 	</div>
 	
 	
-	<!-- 페이징 처리 연습 -->
-	
-	
-	
-	
-	
-	<!-- 로비 배경 이미지 -->
+	<!-- 로비 배경 이미지 ==================================================-->
 	<div class="lobby"></div>
 </div>
 

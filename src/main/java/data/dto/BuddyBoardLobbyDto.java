@@ -6,7 +6,7 @@ import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
 
-@Alias("BuddyBoardDto")
+@Alias("BuddyBoardLobbyDto")
 @Data
 public class BuddyBoardLobbyDto {
 	private int idx;

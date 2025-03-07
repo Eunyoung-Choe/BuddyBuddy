@@ -1,8 +1,9 @@
 package buddymember.controller;
 
 import data.dto.BuddyMemberDto;
-import data.mapper.BuddyMemberMapper;
+import data.dto.BuddyBoardLobbyDto;
 import data.service.BuddyMemberService;
+import data.service.BuddyBoardLobbyService;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
@@ -11,28 +12,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class BuddyMemberController {
-	@Autowired 
-	BuddyMemberService buddyMemberService; 
-	
-	@GetMapping("/lobby")
-	public String buddyMemberDetail(HttpSession session, Model model) {
-		// DTO에 담긴 SQL 데이터 한 개씩 사용할 수 있도록 (dto.uname 등)
-	    String loginId = (String) session.getAttribute("loginid"); // 세션에서 로그인한 사용자 ID 가져오기
+    @Autowired 
+    BuddyMemberService buddyMemberService; 
+    
+    @Autowired
+    BuddyBoardLobbyService buddyBoardLobbyService; // 추가
 
-	    if (loginId == null) {
-	        return "redirect:/login"; // 로그인 페이지로 리다이렉트
-	    }
+    @GetMapping("/lobby")
+    public String buddyMemberDetail(HttpSession session, Model model) {
+        String loginId = (String) session.getAttribute("loginid");
+        if (loginId == null) {
+            return "redirect:/login";
+        }
 
-	    // 특정 회원 정보 가져오기
-	    BuddyMemberDto member = buddyMemberService.getBuddyMemberInfo(loginId);
-	    model.addAttribute("dto", member);
+        // 사용자 정보 가져오기
+        BuddyMemberDto member = buddyMemberService.getBuddyMemberInfo(loginId);
+        model.addAttribute("dto", member);
 
-	    return "lobby/lobby";
-	}
+        // 게시글 페이징 리스트 추가
+        int start = 0; // 기본값 (페이지네이션 구현 필요)
+        int perpage = 10; // 한 페이지당 게시글 개수
+        List<BuddyBoardLobbyDto> boardList = buddyBoardLobbyService.getPagingList(start, perpage);
+        model.addAttribute("boardList", boardList);
+
+        return "lobby/lobby";
+    }
+
+
 	
 	
 	// 아래 코드는 List로 <c:forEach>로 데이터를 반복 출력하는 형태
