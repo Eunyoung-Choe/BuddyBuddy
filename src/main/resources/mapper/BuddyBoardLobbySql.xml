@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="data.mapper.BuddyBoardLobbyMapper">
+
+	<!-- 로비 방명록 총 개수 -->
+	<select id="getTotalCount" resultType="int">
+      select count(*) from buddyboardlobby
+   </select>
+   
+   <!-- 테이블에서 idx가 가장 큰, 즉 가장 최신 글을 가져옴. -->
+   <select id="getMaxIdx" resultType="int">
+      select ifnull(max(idx),0) from buddyboardlobby
+   </select>
+   
+   
+   
+   <!-- 테이블에 새로운 게시글 추가 -->
+   <insert id="insertBoard" parameterType="BuddyBoardLobbyDto">
+      insert into buddyboardlobby (uid, writer, subject, content, regroup, restep, relevel)
+      values (#{uid}, #{writer}, #{subject}, #{content}, #{regroup}, #{restep}, #{relevel})
+		
+		<!-- 댓글 기능을 위한 것인 듯? -->
+      <selectKey keyProperty="idx" resultType="int" order="AFTER"> <!-- 가장 최근에 삽입된 id값 가져오기 (새로 추가된 게시글의 idx 반환) -->
+         SELECT LAST_INSERT_ID()
+      </selectKey>
+   </insert>
+   
+   <!-- 페이징 -->
+	<select id="getPagingList" parameterType="Map" resultType="BuddyBoardLobbyDto">
+      select * from buddyboardlobby order by regroup desc, restep asc limit #{start}, #{perpage} <!-- 시작 위치, 가져올 데이터 개수(한 페이지에 표시할 게시글 개수) -->
+   </select>
+   
+   <!-- 댓글 기능을 위한 정렬 조정 역할 -->
+   <update id="updateRestep" parameterType="Map">
+      update buddyboardlobby set restep = restep+1 where regroup=#{regroup} and restep &gt; #{restep}
+   </update>
+
+
+
+	<!-- 일단 먼저 써 둠. -->
+	<select id="getSelectByIdx" parameterType="int" resultType="BuddyBoardLobbyDto">
+      select * from buddyboardlobby where idx=#{idx}
+   </select>
+   
+   <delete id="deleteBoard" parameterType="int">
+      delete from buddyboardlobby where idx=#{idx}
+   </delete>
+	
+	
+</mapper>

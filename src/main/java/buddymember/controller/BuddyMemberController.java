@@ -35,7 +35,7 @@ public class BuddyMemberController {
 	}
 	
 	
-	
+	// 아래 코드는 List로 <c:forEach>로 데이터를 반복 출력하는 형태
 	/*public String buddyMemberList(Model model)
 	{
 		// BuddyMemberService.java의 getAllMembers()

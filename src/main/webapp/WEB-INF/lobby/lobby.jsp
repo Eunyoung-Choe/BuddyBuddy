@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My BuddyBuddy Hompy</title>
+<title>${dto.uname } BuddyBuddy Hompy</title>
 <link
 	href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Gaegu&family=Jua&family=Nanum+Pen+Script&family=Playwrite+AU+SA:wght@100..400&family=Single+Day&display=swap"
 	rel="stylesheet">
@@ -80,6 +80,8 @@
 
 <body>
 <div class="container">
+	<!-- 네비게이션 -->
+
 	
 	<!-- 프로필 -->
 	<div class="profilecontainer">
@@ -91,7 +93,7 @@
 		
 		<!-- 프로필 유저 정보 -->
 		<div class="profilecontent" alt="profilecontent">
-			<h6>₊‧°𐐪 ${dto.uid} 𐑂°‧₊</h6>
+			<h6>₊‧°𐐪 <b>${dto.uid}</b> 𐑂°‧₊</h6>
 			<h6>✿ 홈피 분양일 ✿<br><fmt:formatDate value="${dto.gaipday}" pattern="yyyy-MM-dd HH:mm"/></h6>
 		</div>
 	</div>
@@ -123,10 +125,17 @@
 			
 			<hr>
 			<div class="minihome" style="width:590px;">
-				<img alt="minihome" src="/lobby/minihome.png" style="width:100%;">
+				<!-- 로그인 한 user에 따라 미니홈이 다르게 뜨도록 설정 -->
+				<img alt="minihome" src="/lobby/minihome${dto.num}.gif" style="width:100%;">
 			</div>
 		</div>
 	</div>
+	
+	
+	<!-- 페이징 처리 연습 -->
+	
+	
+	
 	
 	
 	<!-- 로비 배경 이미지 -->
