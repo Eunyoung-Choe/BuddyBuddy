@@ -14,7 +14,6 @@ public class BuddyBoardLobbyDto {
 	private String writer;
 	private String subject;
 	private String content;
-	private int readcount;
 	private int regroup;
 	private int relevel;
 	private int restep;

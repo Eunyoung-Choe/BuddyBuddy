@@ -2,6 +2,7 @@ package data.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import data.dto.BuddyBoardLobbyDto;
@@ -68,5 +69,16 @@ public class BuddyBoardLobbyService {
 		return buddyBoardLobbyMapper.getSelectById(uid);
 	}
 	
+	
+
+    // 한마디 저장
+    public void insertSentence(BuddyBoardLobbyDto dto) {
+    	buddyBoardLobbyMapper.insertSentence(dto);
+    }
+
+    // 한마디 목록 가져오기
+    public List<BuddyBoardLobbyDto> getAllSentences() {
+        return buddyBoardLobbyMapper.getAllSentences();
+    }
 	
 }

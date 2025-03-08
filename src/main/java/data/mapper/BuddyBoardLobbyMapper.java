@@ -17,4 +17,10 @@ public interface BuddyBoardLobbyMapper {
 	public BuddyBoardLobbyDto getSelectByIdx(int idx);
 	public List<BuddyBoardLobbyDto> getSelectById(String uid);
 	public void deleteBoard(int idx);
+	
+	
+	// 한마디 추가
+    public void insertSentence(BuddyBoardLobbyDto dto);
+    // 한마디 목록 가져오기
+    public List<BuddyBoardLobbyDto> getAllSentences();
 }

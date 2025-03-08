@@ -19,11 +19,15 @@
       insert into buddyboardlobby (uid, writer, subject, content, regroup, restep, relevel)
       values (#{uid}, #{writer}, #{subject}, #{content}, #{regroup}, #{restep}, #{relevel})
 		
-		<!-- 댓글 기능을 위한 것인 듯? -->
       <selectKey keyProperty="idx" resultType="int" order="AFTER"> <!-- 가장 최근에 삽입된 id값 가져오기 (새로 추가된 게시글의 idx 반환) -->
          SELECT LAST_INSERT_ID()
       </selectKey>
    </insert>
+   
+   <select id="getAllSentences" resultType="BuddyBoardLobbyDto">
+    	SELECT * FROM buddyboardlobby ORDER BY writeday DESC
+	</select>
+
    
    <!-- 페이징 -->
 	<select id="getPagingList" parameterType="Map" resultType="BuddyBoardLobbyDto">
