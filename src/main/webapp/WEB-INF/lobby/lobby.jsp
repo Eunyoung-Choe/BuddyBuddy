@@ -224,7 +224,7 @@ dl {
 	<div class="thirdcontainer">
 		<div class="minihomecontainer">
 			<c:if test="${sessionScope.loginstatus!=null}">
-				<span style="color:#77BB31; font-size: 17px;">${sessionScope.loginid}의 미니 홈피౨ৎ˚⟡˖ ࣪</span>
+				<span style="color:#77BB31; font-size: 17px;">${sessionScope.loginid}의 마이룸౨ৎ˚⟡˖ ࣪</span>
 			</c:if>
 			
 			<!-- 미니홈 이미지 -->

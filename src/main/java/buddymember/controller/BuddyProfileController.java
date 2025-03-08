@@ -27,7 +27,7 @@ public class BuddyProfileController {
         
         // 모델에 사용자 정보 추가
         model.addAttribute("dto", dto);
-        model.addAttribute("naverurl", "https://kr.object.ncloudstorage.com/bitcamp-bucket-56");
+        model.addAttribute("naverurl", "https://kr.object.ncloudstorage.com/bitcamp-bucket-149");
 
         return "profile/profile"; // profile.jsp로 이동
     }

@@ -62,7 +62,7 @@ a:hover {
   z-index: -1; 
 }
 
-/* 버디바디 */
+/* 왼쪽 - 버디바디 */
 .leftcontainer {
 	position: absolute;
 	background-image: url('/profile/buddybaddy.png');
@@ -70,11 +70,31 @@ a:hover {
 	height: 480px;
 	top: 215px;
 	left: 165px;
-	background-size: cover;  /* 이미지가 div 크기에 맞게 커버되도록 설정 */
-	background-position: center; /* 이미지를 가운데로 정렬 */
+	background-size: cover; 
+	background-position: center; 
 }
 
+/* 오른쪽 - 프로필 편집 */
+.rightcontainer {
+	position: absolute;
+	width: 570px;
+	height: 495px;
+	top: 215px;
+	left: 614px;
+	border: 1px solid black;
+}
 
+/* 프로필 바꾸기 제목 */
+.modifytitle>p {
+	border-top: 2px solid #DCDEDB;
+	background-color:#F5F5F5;
+}
+
+/* 아바타 꾸미기 제목 */
+.modifyphototitle>p {
+	border-top: 2px solid #DCDEDB;
+	background-color:#F5F5F5;
+}
 
 </style>
 </head>
@@ -107,7 +127,26 @@ a:hover {
 	
 	
 	<!-- (오른쪽) 프로필 정보 및 수정 -->
-	
+	<div class="rightcontainer">
+		<!-- 프로필 바꾸기 -->
+		<div class="modifytitle"> 
+			<p style="color:#77BB31; font-size: 25px; margin-bottom:5px;">프로필 바꾸기</p>
+			<div class="modifyprofile" style="border:1px solid black; width:100%; height:120px; margin-bottom:15px;">
+										
+			</div>
+		</div>	
+		
+		<!-- 아바타 꾸미기 -->
+		<div class="modifyphototitle">
+			<p style="color:#77BB31; font-size: 25px; margin-bottom:5px;">아바타 꾸미기</p>
+			<div class="modifyphoto" style="border:1px solid black; width:100%; height:120px;">
+										
+			</div>
+		</div>
+			
+		
+		
+	</div>
 	
 	
 
