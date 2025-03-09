@@ -70,7 +70,6 @@ a:hover {
   top: 230px;
   left: 140px;
   background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid black;
 }
 
 /* 두 번째 칸 (To Do List) */
@@ -92,7 +91,6 @@ a:hover {
   top: 210px;
   left: 600px;
   background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid black;
 }
 
 /* 한마디 제출 버튼 */
@@ -107,6 +105,21 @@ a:hover {
 #btnsave:hover {
 	background-color: #9ED459;
 }
+
+/* 페이징 버튼 */
+.pagination .page-link {
+    background-color: #f0f0f0;
+    color: #333;
+    padding-top: 1px; /* 위쪽 패딩 조정 */
+    padding-bottom: 1px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #77BB31;
+    color: white;
+    border: none;
+}
+
 
 /* 날씨 목록 가로 정렬 */
 dl {
@@ -154,7 +167,7 @@ dl {
 		<div class="profilephoto" alt="profilephoto" style="width:100%; height:210px; margin-bottom:15px; position:relative;">
 			<!-- 프로필 이미지 -->
 			<img src="${naverurl}/buddy/${dto.uprofile}" class="profilephoto"
-        		onerror="this.src='${naverurl}/lobby/default${dto.num}.gif'" style="width:100%; position:absolute; bottom:0;">
+        		onerror="this.src='${naverurl}/lobby/default${dto.num}.gif'" style="width:100%; position:absolute; bottom:0; border-bottom:1px dotted #575958;">
 		</div>
 		
 		<!-- 프로필 유저 정보 (BuddyMemberController의 Dto -->
@@ -235,23 +248,24 @@ dl {
 			
 			<!-- 한마디 남기기 -->
 			<div class="lobbyboard">
-				<h6 style="margin-top:8px; color:#77BB31; font-size: 17px;">TALK TALK! 한마디 남기기</h6> 
+				<h6 style="margin-top:8px; margin-bottom:2px;color:#77BB31; font-size: 17px;">TALK TALK! 한마디 남기기</h6> 
 				
 				<!-- 한마디 입력란 -->
 				<form action="./lobby" method="post" enctype="multipart/form-data">
-					<input type="text" class="input-sentence" id="sentence" name="content" required="required" placeholder="오늘의 한마디는?" style="width:520px; display:inline-block;">
+					<input type="text" class="input-sentence" id="sentence" name="content" required="required" placeholder="오늘의 한마디는?" style="width:520px; margin-bottom:3px;display:inline-block;">
 					<button type="submit" class="sentence-save" id="btnsave">게시</button>
 				</form>
 				
-				<!-- 한마디 목록 -->
-				<!-- 페이징 처리 코드 그대로 가져옴 -->
+				<!-- 한마디 목록 (페이징)-->
 				<table class="lobbyboard-table">
 					<thead>
 						<tr>
-							<th width="50">번호</th>
-							<th width="400">내용</th>
-							<th width="100">작성일</th>
+						    <th width="50" style="text-align: center;">번호</th>
+						    <th width="400" style="text-align: center;">내용</th>
+						    <th width="100" style="text-align: center;">작성자</th>
+						    <th width="100" style="text-align: center;">작성일</th>
 						</tr>
+
 					</thead>
 					<tbody>
 						<c:if test="${totalCount==0}">
@@ -263,32 +277,14 @@ dl {
 						</c:if>
 						
 						<c:if test="${totalCount>0}">
-						 <c:forEach var="dto" items="${list}">
+						 <c:forEach var="dto" items="${boardList}">
 						 	<tr>
 						 		<td align="center">
 						 			${no}
 						 			<c:set var="no" value="${no-1}"/>
 						 		</td>
 						 		<td>
-						 		<!-- 제목 -->
-						 			<a href="./detail?idx=${dto.idx}&pageNum=${pageNum}"
-						 			style="color: black;text-decoration: none;">
-						 				<!-- 답글인 경우 레벨수만큼 띄어쓰기 -->
-						 				<c:if test="${dto.relevel>0}">
-						 					<c:forEach begin="1" end="${dto.relevel}">
-						 						&nbsp;&nbsp;&nbsp;
-						 					</c:forEach>
-						 					
-						 					<!-- 답글인 경우 re 이미지 -->
-						 					<img src="../re.png">
-						 				</c:if>
-						 				${dto.subject}
-						 				
-						 				<!-- 댓글이 있는 경우에만 갯수 출력 -->
-						 				<c:if test="${dto.repleCount>0}">
-						 					<span style="color:red;">[${dto.repleCount}]</span>
-						 				</c:if>
-						 			</a>		 				
+					 				${dto.content}						 			
 						 		</td>
 						 		
 						 		<td align="center">${dto.writer}</td>
@@ -297,7 +293,6 @@ dl {
 						 				<fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd"/>
 						 			</span>
 						 		</td>
-						 		<td align="center">${dto.readcount}</td>
 						 	</tr>			 
 						 </c:forEach>
 						</c:if>				
@@ -306,33 +301,32 @@ dl {
 				
 				
 				<div style="width: 700px;">
-					<ul class="pagination" style="margin-left: 200px;">
+					<ul class="pagination pagination-sm" style="margin-left: 250px;">
 						<c:if test="${startPage>1}">
 							<li class="page-item">
-								<a class="page-link" href="./list?pageNum=${startPage-1}">Prev</a>
+								<a class="page-link" href="./lobby?pageNum=${startPage-1}">Prev</a>
 							</li>
 						</c:if>
 						<c:forEach var="pp" begin="${startPage}" end="${endPage}">
 							<c:if test="${pp==pageNum}">
 								<li class="page-item active">
-									<a class="page-link" href="./list?pageNum=${pp}">${pp}</a>
+									<a class="page-link" href="./lobby?pageNum=${pp}">${pp}</a>
 								</li>
 							</c:if>
 							<c:if test="${pp!=pageNum}">
 								<li class="page-item">
-									<a class="page-link" href="./list?pageNum=${pp}">${pp}</a>
+									<a class="page-link" href="./lobby?pageNum=${pp}">${pp}</a>
 								</li>
 							</c:if>
 						</c:forEach>
 						<c:if test="${endPage<totalPage}">
 							<li class="page-item">
-								<a class="page-link" href="./list?pageNum=${endPage+1}">Next</a>
+								<a class="page-link" href="./lobby?pageNum=${endPage+1}">Next</a>
 							</li>
 						</c:if>
 					</ul>
 				</div>
 			</div>
-			
 		</div>
 	</div>
 	
@@ -341,6 +335,7 @@ dl {
 	<div class="lobby"></div>
 </div>
 
+<!-- 날씨 API -->
 <script src="weather.js"></script>
 </body>
 </html>

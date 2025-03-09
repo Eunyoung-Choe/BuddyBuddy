@@ -16,12 +16,21 @@
 
 	<select id="checkUid" parameterType="String" resultType="int">
       select count(*) from buddymember where uid=#{uid}
-   </select> <!-- count(*)이라서 resultType이 int -->
+    </select> <!-- count(*)이라서 resultType이 int -->
+   
    
    <insert id="insertBuddyMember" parameterType="BuddyMemberDto">
    		insert into buddymember (uname, upass, uid, uprofile, gaipday)
    			values (#{uname}, #{upass}, #{uid}, #{uprofile}, now())
    </insert>
+   
+   
+    <!-- 프로필 유저 정보 수정 -->
+    <update id="updateBuddyMember" parameterType="data.dto.BuddyMemberDto">
+	    UPDATE buddymember
+	    SET uname = #{uname}, upass = #{upass}, uprofile = #{uprofile}
+	    WHERE uid = #{uid}
+	</update>
    
    
    <!-- 로그인 -->

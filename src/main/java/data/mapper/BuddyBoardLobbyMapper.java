@@ -13,7 +13,6 @@ public interface BuddyBoardLobbyMapper {
 	public void updateRestep(int regroup,int restep);
 	public void insertBoard(BuddyBoardLobbyDto dto);
 	public List<BuddyBoardLobbyDto> getPagingList(int start, int perpage);
-	
 	public BuddyBoardLobbyDto getSelectByIdx(int idx);
 	public List<BuddyBoardLobbyDto> getSelectById(String uid);
 	public void deleteBoard(int idx);

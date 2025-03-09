@@ -132,7 +132,9 @@ a:hover {
 		
 		<!-- 미리보기의 아바타 실제 적용하기 -->
 		<div class="submitbutton" style="padding-left:35px; margin-top:auto; display:flex; align-items:center; justify-content:center; height:55px;">
-			<button type="submit" id="photosubmit" style="width:200px; border:none; background-color:transparent;"> 𐐪 프로필에 적용하기 𐑂 </button>
+			<form action="./lobby" method="post" enctype="multipart/form-data">
+				<button type="submit" id="photosubmit" style="width:200px; border:none; background-color:transparent;"> 𐐪 프로필에 적용하기 𐑂 </button>
+			</form>
 		</div>
 	</div>
 	
@@ -157,12 +159,12 @@ a:hover {
 		<div class="modifyphototitle">
 			<p style="color:#77BB31; font-size: 25px; margin-bottom:5px; display: flex; justify-content: space-between; align-items: flex-end;">
 				아바타 꾸미기 <label for="photoUpload" style="cursor: pointer; float:right; font-size:17px; color:#575958;"> ෆ옷장 </label>
-				<input type="file" id="photoUpload" style="display: none;">
+				<input type="file" name="profileImage" id="photoUpload" style="display: none;">
 			</p>
 			<!-- 아바타 미리보기 -->
-			<div class="modifyphoto" style="border:1px solid black; width:100%; height:270px;">
+			<div class="modifyphoto" style="border:1px solid black; width:100%; height:270px;"></div>
 				
-			</div>
+			
 		</div>
 	</div>
 	

@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class BuddyMemberController {
+	private String bucketName = "bitcamp-bucket-149";
+	
     @Autowired 
     BuddyMemberService buddyMemberService; 
     
@@ -27,20 +29,32 @@ public class BuddyMemberController {
     BuddyBoardLobbyService buddyBoardLobbyService;
 
     @GetMapping("/lobby")
-    public String buddyMemberDetail(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, 
-                                    HttpSession session, Model model) {
+    public String buddyMemberDetail(
+    		@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, 
+            HttpSession session,
+            Model model) 
+    {
         String loginId = (String) session.getAttribute("loginid");
         if (loginId == null) {
             return "redirect:/login";
         }
         
+        
+        // 여기부터
+        
+//        String uprofile = buddyMemberService.getSelectByUid(dto.getUid()).
+        
         // 사용자 정보 가져오기
         BuddyMemberDto member = buddyMemberService.getBuddyMemberInfo(loginId);
+        
         model.addAttribute("dto", member);
+        model.addAttribute("naverurl", "https://kr.object.ncloudstorage.com/"+bucketName);
+        
+        
         
 
-        // 페이징 처리 변수
-        int perPage = 10;  // 한 페이지당 출력할 글 개수
+        // 페이징 처리 =================================================================
+        int perPage = 5;  // 한 페이지당 출력할 글 개수
         int perBlock = 5;  // 한 블럭당 출력할 페이지 개수
         int totalCount = buddyBoardLobbyService.getTotalCount(); // 전체 게시글 개수
         int totalPage = (int) Math.ceil((double) totalCount / perPage); // 총 페이지 수
@@ -90,7 +104,7 @@ public class BuddyMemberController {
     
     
 	 	// 한마디 저장
-	    @PostMapping
+	    @PostMapping("/lobby")
 	    public String saveSentence(@ModelAttribute BuddyBoardLobbyDto dto, HttpSession session) {
 	        // 로그인된 사용자 ID 가져오기
 	        String loginId = (String) session.getAttribute("loginid");

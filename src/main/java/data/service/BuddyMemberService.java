@@ -36,5 +36,25 @@ public class BuddyMemberService {
 	public BuddyMemberDto getSelectByUid(String uid) {
 		return buddyMemberMapper.getSelectByUid(uid);
 	}
+	
+	public void insertBuddyBoard(BuddyMemberDto dto)
+	{
+		String uname = dto.getUname();
+		String uid = dto.getUid();
+		String upass = dto.getUpass();
+		String uprofile = dto.getUprofile();
+		
+		dto.setUname(uname);
+		dto.setUid(uid);
+		dto.setUpass(upass);
+		dto.setUprofile(uprofile);
+		
+		buddyMemberMapper.insertBuddyBoard(dto); // DB insert 
+	}
+	
+	// 유저 정보 수정
+	public void updateBuddyMember(BuddyMemberDto dto) {
+        buddyMemberMapper.updateBuddyMember(dto);
+    }
 
 }

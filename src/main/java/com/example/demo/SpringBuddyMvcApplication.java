@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"data.*", "*.controller", "com.example.demo", "*.mapper"})
+@ComponentScan({"data.*", "*.controller", "naver.storage", "com.example.demo", "*.mapper"})
 @MapperScan({"data.mapper"})
 public class SpringBuddyMvcApplication {
 

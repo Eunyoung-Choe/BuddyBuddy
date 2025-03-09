@@ -21,4 +21,8 @@ public interface BuddyMemberMapper {
 	// 로그인
 	public int loginCheck(String loginid, String loginpass);
 	public BuddyMemberDto getSelectByUid(String uid);
+	
+	public void insertBuddyBoard(BuddyMemberDto dto);
+	
+	void updateBuddyMember(BuddyMemberDto dto);
 }
