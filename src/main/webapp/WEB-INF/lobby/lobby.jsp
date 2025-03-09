@@ -167,12 +167,12 @@ dl {
 		<div class="profilephoto" alt="profilephoto" style="width:100%; height:210px; margin-bottom:15px; position:relative;">
 			<!-- 프로필 이미지 -->
 			<img src="${naverurl}/buddy/${dto.uprofile}" class="profilephoto"
-        		onerror="this.src='${naverurl}/lobby/default${dto.num}.gif'" style="width:100%; position:absolute; bottom:0; border-bottom:1px dotted #575958;">
+        		onerror="this.src='/lobby/default${dto.num}.gif'" style="width:100%; position:absolute; bottom:0; border-bottom:1px dotted #575958;">
 		</div>
 		
 		<!-- 프로필 유저 정보 (BuddyMemberController의 Dto -->
 		<div class="profilecontent" alt="profilecontent" style="text-align: center;">
-			<h6 style="color:#77BB31">₊‧°𐐪 <b>${dto.uid}</b> 𐑂°‧₊</h6> 
+			<h5 style="color:#77BB31">₊‧°𐐪 <b>${dto.uname}</b> 𐑂°‧₊</h5> 
 			<h6 style="margin-top:10px;">✿ 홈피 분양일 ✿<br><fmt:formatDate value="${dto.gaipday}" pattern="yyyy-MM-dd HH:mm"/></h6>
 		</div>
 		

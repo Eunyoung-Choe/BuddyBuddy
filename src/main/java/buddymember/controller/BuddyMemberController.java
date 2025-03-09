@@ -40,10 +40,6 @@ public class BuddyMemberController {
         }
         
         
-        // 여기부터
-        
-//        String uprofile = buddyMemberService.getSelectByUid(dto.getUid()).
-        
         // 사용자 정보 가져오기
         BuddyMemberDto member = buddyMemberService.getBuddyMemberInfo(loginId);
         
@@ -121,6 +117,16 @@ public class BuddyMemberController {
 	        // 저장 후 로비 페이지로 리다이렉트
 	        return "redirect:/lobby";
     }
+	
 	    
+	    
+	// 프로필 정보 업데이트
+    @PostMapping("/update")
+	@ResponseBody
+	public void update(@ModelAttribute BuddyMemberDto dto)
+	{
+		System.out.println(dto.getNum());
+		buddyMemberService.updateBuddyMember(dto);
+	}
 
 }

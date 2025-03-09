@@ -11,10 +11,34 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-    <style>
-    </style>
+<style>
+body {
+    background-image: url('/login/root.png'); /* 이미지 URL 설정 */
+    background-size: cover; /* 배경 이미지 크기 조절 */
+    background-repeat: no-repeat; /* 배경 이미지 반복 설정 */
+    background-position: center; /* 배경 이미지 위치 설정 */
+    height: 100vh; /* 화면 높이 100% 설정 */
+    margin: 0; /* 기본 마진 제거 */
+}
+
+#loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px; /* 박스 크기 설정 (원하는 크기로 변경) */
+    height: 400px; /* 박스 크기 설정 (원하는 크기로 변경) */
+    /* background-color: rgba(255, 0, 0, 0.5); /* 박스 배경색 설정 (테스트용) */
+    cursor: pointer; /* 마우스 커서 변경 */
+}
+</style>
 </head>
 <body>
-버디버디 메인 페이지 사진 추가 예정 (루트)
+<div id="loginBox"></div>
+    <script>
+        document.getElementById('loginBox').addEventListener('click', function() {
+            window.location.href = '/login';
+        });
+    </script>
 </body>
 </html>

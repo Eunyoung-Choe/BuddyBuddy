@@ -14,6 +14,8 @@
 
 <style>
 body {
+  opacity: 0;
+  transition: opacity 1s ease-in-out; /* 1초 간 페이드인 */
   background-color: rgba(158,212,87,0.4);
 
 }
@@ -43,8 +45,8 @@ body {
   height: 30px;
   top: 606px;
   left: 550px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid black;
+  border: none;
+  background-color: transparent;
 }
 
 /* 비밀번호 입력란 */
@@ -54,8 +56,8 @@ body {
   height: 30px;
   top: 662px;
   left: 550px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid black;
+  border: none;
+  background-color: transparent;
 }
 
 /* 로그인 버튼 (투명) */
@@ -121,6 +123,11 @@ body {
 			}
 		});
 	});
+	
+// 로그인 페이드인으로 시작
+window.onload = function() {
+    document.body.style.opacity = 1;
+};
 </script>	
 	
 </body>

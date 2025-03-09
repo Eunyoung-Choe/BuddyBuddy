@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Single+Day&family=Stylish&display=swap" rel="stylesheet">
 <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
@@ -87,7 +87,6 @@ a:hover {
 	height: 495px;
 	top: 215px;
 	left: 614px;
-	border: 1px solid black;
 }
 
 /* 프로필 바꾸기 제목 */
@@ -102,12 +101,94 @@ a:hover {
 	background-color:#F5F5F5;
 }
 
+/* 모달 배경 이미지 */
+#myUpdateModal .modal-content {
+    background-image: url('profile/modal.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* 모달 Header 크기 조정 */
+#myUpdateModal .modal-header {
+    height: 55px; 
+}
+
+/* 모달 위치 */
+#myUpdateModal .modal-dialog {
+    position: fixed;
+    top: 45%;
+    left: 77.8%;
+    transform: translate(-50%, -50%);
+}
+
+/* 모달 뒷배경 어둡기 정도 */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0); /* 어둡기 정도 조절 (0~1, 0: 투명, 1: 완전 불투명) */
+}
+
+/* 버디몰 */
+.buddymall {
+	position: absolute;
+	background-image: url('/profile/buddymall.png');
+	width:100%;
+	height:287px;
+	background-size: cover; 
+	background-position: center; 
+}
+
 </style>
 </head>
-
 <body>
-
 <div class="container">
+
+<!-- 회원정보 수정 모달 ==========================================================-->
+<div class="modal" id="myUpdateModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" style="color:#77BB31;"> 프로필 바꾸기 </h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <h6 style="margin-bottom:2px; color:#77BB31;"> 이름 </h6>
+        <input type="text" class="form-control" id="uname"
+        value="${dto.uname}">
+        <h6 style="margin-bottom:2px; margin-top:5px; color:#77BB31;"> 아이디 </h6>
+        <input type="text" class="form-control" id="uid"
+        value="${dto.uid}">
+        <h6 style="margin-bottom:2px; margin-top:5px; color:#77BB31;"> 비밀번호 </h6>
+        <input type="text" class="form-control" id="upass"
+        value="${dto.upass}">
+        <br>
+        <button type="button" id="btnupdate" data-bs-dismiss="modal" style="border:none;background-color:none; color:#548F3C;">
+        	수정
+       	</button>
+        
+        <script>
+        	$("#btnupdate").click(function(){
+        		$.ajax({
+        			type:"post",
+        			dataType:"text",
+        			data:{"uname":$("#uname").val(),"uid":$("#uid").val(),
+        				"upass":$("#upass").val(),"num":${dto.num}},
+        			url:"./update",
+        			success:function(){
+        				location.reload();
+        			}
+        		});
+        	});
+        
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 	<!-- 네비게이션 =======================================================-->
 	<div class="navi">
 		<h6 style="margin-top:14px; font-size:17px;">
@@ -130,10 +211,13 @@ a:hover {
 			<img id="previewImage" src="" alt="미리보기" style="width:100%; height:100%; object-fit:cover; display:none;">
 		</div>
 		
-		<!-- 미리보기의 아바타 실제 적용하기 -->
+		<!-- 미리보기의 이미지 클라우드 저장 및 로비 프로필에 적용하기 -->
 		<div class="submitbutton" style="padding-left:35px; margin-top:auto; display:flex; align-items:center; justify-content:center; height:55px;">
 			<form action="./lobby" method="post" enctype="multipart/form-data">
-				<button type="submit" id="photosubmit" style="width:200px; border:none; background-color:transparent;"> 𐐪 프로필에 적용하기 𐑂 </button>
+				<input type="file" name="profileImage" id="photoUpload" style="display: none;">
+				<button type="submit" id="photosubmit" style="width:200px; border:none; background-color:transparent;"> 
+					𐐪 프로필에 적용하기 𐑂 
+				</button>
 			</form>
 		</div>
 	</div>
@@ -143,27 +227,36 @@ a:hover {
 	<div class="rightcontainer">
 		<!-- 프로필 개인정보 바꾸기 -->
 		<div class="modifytitle"> 
-			<p style="color:#77BB31; font-size: 25px; margin-bottom:5px; display: flex; justify-content: space-between; align-items: flex-end;">
-				프로필 바꾸기 <span style="float:right; font-size:17px; color:#575958;"> ✎수정 </span>
+			<p style="color:#77BB31; font-size: 25px; margin-bottom:5px; padding-left:10px; display: flex; justify-content: space-between; align-items: flex-end;">
+				프로필 바꾸기 
+				<button style="float:right; font-size:17px; color:#575958; border:none; background-color:transparent;" data-bs-toggle="modal" data-bs-target="#myUpdateModal"> 
+					✎수정 
+				</button>
 			</p>
-			<div class="modifyprofile" style="border:1px solid black; width:100%; height:120px; margin-bottom:15px;">
-				<p style="margin:0;"> [내 정보] </p>
-				이름: ${dto.uname} <br>
-				아이디: ${dto.uid } <br>				
-				비밀번호: ${dto.upass } <br>
-				가입일: ${dto.gaipday }
+			<div class="modifyprofile" style="width:100%; height:120px; margin-bottom:15px; padding-left:10px;">
+				<p style="margin:0; font-size:17px; color:#548F3C;"> <b>내 정보</b> </p>
+				<span style="color:#548F3C;">꒰ა 이름	|</span> ${dto.uname} <br>
+				<span style="color:#548F3C;">꒰ა 아이디 |</span> ${dto.uid } <br>				
+				<span style="color:#548F3C;">꒰ა 비밀번호 |</span> ${dto.upass } <br>
+				<span style="color:#548F3C;">꒰ა 가입일  |</span> ${dto.gaipday }
 			</div>
 		</div>	
 		
 		<!-- 아바타 꾸미기 -->
-		<div class="modifyphototitle">
-			<p style="color:#77BB31; font-size: 25px; margin-bottom:5px; display: flex; justify-content: space-between; align-items: flex-end;">
-				아바타 꾸미기 <label for="photoUpload" style="cursor: pointer; float:right; font-size:17px; color:#575958;"> ෆ옷장 </label>
-				<input type="file" name="profileImage" id="photoUpload" style="display: none;">
-			</p>
-			<!-- 아바타 미리보기 -->
-			<div class="modifyphoto" style="border:1px solid black; width:100%; height:270px;"></div>
+		<div class="modifyphototitle" style="margin-top:20px;">
+			<p style="color:#77BB31; font-size: 25px; margin-bottom:5px; padding-left:10px; padding-right:6px; display: flex; justify-content: space-between; align-items: flex-end;">
+				아바타 꾸미기 
+				<label for="photoUpload" style="cursor: pointer; float:right; font-size:17px; color:#575958;"> 
+					ෆ옷장 
+				</label>
 				
+				<!-- <form action="./profile" method="post" enctype="multipart/form-data">
+					<input type="file" name="profileImage" id="photoUpload" style="display: none;">
+				</form> -->
+			</p>
+			<!-- 버디몰 사진 구성 -->
+			<div class="buddymall"></div>
+							
 			
 		</div>
 	</div>
