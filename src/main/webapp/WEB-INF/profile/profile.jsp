@@ -74,6 +74,12 @@ a:hover {
 	background-position: center; 
 }
 
+/* 미리보기 프로필에 적용하기 버튼 */
+#photosubmit:hover {
+	color: #77BB31;
+}
+
+
 /* 오른쪽 - 프로필 편집 */
 .rightcontainer {
 	position: absolute;
@@ -119,41 +125,69 @@ a:hover {
 	
 	<!-- (왼쪽) 버디바디 ===================================================-->
 	<div class="leftcontainer">
-		<!-- 버디바디에 프로필 미리보기 -->
-		<div class="buddybaddy" style="width:230px; height:270px; margin:146px 0 0 92px; border:1px solid black;">
-			여기에 프로필 미리보기			
+		<!-- 버디바디에 변경한 프로필 미리보기 -->
+		<div class="buddybaddy" style="width:237px; height:285px; margin:140px 0 0 92px;">
+			<img id="previewImage" src="" alt="미리보기" style="width:100%; height:100%; object-fit:cover; display:none;">
+		</div>
+		
+		<!-- 미리보기의 아바타 실제 적용하기 -->
+		<div class="submitbutton" style="padding-left:35px; margin-top:auto; display:flex; align-items:center; justify-content:center; height:55px;">
+			<button type="submit" id="photosubmit" style="width:200px; border:none; background-color:transparent;"> 𐐪 프로필에 적용하기 𐑂 </button>
 		</div>
 	</div>
 	
 	
 	<!-- (오른쪽) 프로필 정보 및 수정 -->
 	<div class="rightcontainer">
-		<!-- 프로필 바꾸기 -->
+		<!-- 프로필 개인정보 바꾸기 -->
 		<div class="modifytitle"> 
-			<p style="color:#77BB31; font-size: 25px; margin-bottom:5px;">프로필 바꾸기</p>
+			<p style="color:#77BB31; font-size: 25px; margin-bottom:5px; display: flex; justify-content: space-between; align-items: flex-end;">
+				프로필 바꾸기 <span style="float:right; font-size:17px; color:#575958;"> ✎수정 </span>
+			</p>
 			<div class="modifyprofile" style="border:1px solid black; width:100%; height:120px; margin-bottom:15px;">
-										
+				<p style="margin:0;"> [내 정보] </p>
+				이름: ${dto.uname} <br>
+				아이디: ${dto.uid } <br>				
+				비밀번호: ${dto.upass } <br>
+				가입일: ${dto.gaipday }
 			</div>
 		</div>	
 		
 		<!-- 아바타 꾸미기 -->
 		<div class="modifyphototitle">
-			<p style="color:#77BB31; font-size: 25px; margin-bottom:5px;">아바타 꾸미기</p>
-			<div class="modifyphoto" style="border:1px solid black; width:100%; height:120px;">
-										
+			<p style="color:#77BB31; font-size: 25px; margin-bottom:5px; display: flex; justify-content: space-between; align-items: flex-end;">
+				아바타 꾸미기 <label for="photoUpload" style="cursor: pointer; float:right; font-size:17px; color:#575958;"> ෆ옷장 </label>
+				<input type="file" id="photoUpload" style="display: none;">
+			</p>
+			<!-- 아바타 미리보기 -->
+			<div class="modifyphoto" style="border:1px solid black; width:100%; height:270px;">
+				
 			</div>
 		</div>
-			
-		
-		
 	</div>
 	
-	
+
 
 
 	<!-- 로비 배경 이미지 ==================================================-->
 	<div class="lobby"></div>
 </div>
 
+
+<!-- 아바타 미리보기 JS코드 -->
+<script>
+    document.getElementById("photoUpload").addEventListener("change", function(event) {
+        const file = event.target.files[0];  // 선택한 파일 가져오기
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewImage = document.getElementById("previewImage");
+                previewImage.src = e.target.result;
+                previewImage.style.display = "block";  // 이미지 보이게 변경
+            };
+            reader.readAsDataURL(file); // 파일을 읽어 Data URL로 변환
+        }
+    });
+</script>
 </body>
 </html>
