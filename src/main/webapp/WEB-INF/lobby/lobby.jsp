@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,9 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Single+Day&family=Stylish&display=swap" rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
@@ -80,7 +80,28 @@ a:hover {
   top: 210px;
   left: 357px;
   background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid black;
+}
+
+/* 할 일 추가 버튼 */
+#todobutton {
+	height: 30px;
+	 background-color:#77BB31;
+	 border: none;
+	 border-radius: 4px;
+	 cursor: pointer;
+}
+
+#todobutton:hover {
+	background-color: #9ED459;
+}
+
+.todolist {
+	background-image: url('/lobby/memo.png');
+	background-size: cover;
+	background-position: center; /* 이미지를 가운데 정렬 */
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
+    width: 50%;
+    height: 70px;
 }
 
 /* 세 번째 칸 */
@@ -137,6 +158,19 @@ dl {
     width: 100%;
     height: 105px;
 }
+
+/* 사진 앨범 확대 모달 */
+#myMiniPhotoModal .modal-content {
+    background-image: url('lobby/minialbum.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
+/* 모달 헤더 아래쪽 구분선 제거 */
+#myMiniPhotoModal .modal-header {
+    border-bottom: none; 
+}
 </style>
 
 <script>
@@ -147,6 +181,27 @@ dl {
 
 <body>
 <div class="container">
+<!-- 미니 포토 클릭 시 확대 모달  -->
+<div class="modal" id="myMiniPhotoModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <img src="" class="replelarge" id="largeImage" style="width: 100%;">
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
 	<!-- 네비게이션 ==================================================-->
 	<div class="navi">
 		<h6 style="margin-top:14px; font-size:17px;">
@@ -187,10 +242,11 @@ dl {
 	<!-- 2라인 컨테이너 ==================================================-->
 	<div class="secondcontainer">
 		<div>
-			<span style="color:#77BB31; font-size: 17px;">To Do List</span> 
+			<!-- To Do List -->
+			<span style="color:#77BB31; font-size: 17px;"> 오늘의 할 일 </span> 
 			<hr style="margin:5px 0 5px 0;">
 			
-			<div class="todolist" style="width:100%; height:220px; border:1px solid black;">
+			<div class="todolist" style="width:100%; height:220px;">
 				
 			</div>
 		</div>
@@ -206,14 +262,14 @@ dl {
 			<span style="color:#77BB31; font-size: 17px;">사진 앨범</span>
 			
 			<div class="miniphoto" style="display:flex;">
-				<img alt="miniphoto" src="/lobby/miniphoto${dto.num}.jpg" style="width:45%; height: 90%; margin: 5px 20px 0 0;">
-				<img alt="miniphoto" src="/lobby/miniphoto${dto.num}.png" style="width:45%; height: 90%; margin-top:5px;">
+				<img alt="miniphoto" src="/lobby/miniphoto${dto.num}.jpg" class="mini" id="largeImage1" style="width:45%; height: 90%; margin: 5px 20px 0 0;" data-bs-toggle="modal" data-bs-target="#myMiniPhotoModal">
+				<img alt="miniphoto" src="/lobby/miniphoto${dto.num}.png" class="mini" id="largeImage2" style="width:45%; height: 90%; margin-top:5px;" data-bs-toggle="modal">
 			</div>
 		</div>
 		
 		
 		<!-- 날씨 API -->
-		<div class="weather" style="margin-top:20px;">
+		<div class="weather" style="margin-top:30px;">
 			<span style="color:#77BB31; font-size: 17px;">지금 나의 날씨는 ~</span>
 			<hr style="margin:5px 0 5px 0;">
 		    <dl>
@@ -337,5 +393,28 @@ dl {
 
 <!-- 날씨 API -->
 <script src="weather.js"></script>
+
+<!-- 사진 앨범 이미지 확대 모달 -->
+<script>
+	$(document).on("click", "img.mini", function() {
+	    let imgSrc = $(this).attr("src");
+	    $("#largeImage").attr("src", imgSrc); // 큰 사진 src 설정
+	    $("#myMiniPhotoModal").modal("show"); 
+	});
+	
+	$(document).on("change", "input[name='items']", function() {
+        if (this.checked) {
+            let itemToDelete = $(this).val();
+            $.ajax({
+                url: "./lobby", // 현재 페이지로 요청
+                type: "POST",
+                data: { deleteItem: itemToDelete }, // 삭제할 항목 값 전송
+                success: function() {
+                    location.reload(); // 페이지 새로고침
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>
