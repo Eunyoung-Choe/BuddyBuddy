@@ -30,15 +30,17 @@ public class LoginController {
 			session.setMaxInactiveInterval(60*60*4); // 4시간 유지
 			session.setAttribute("loginstatus", "success");
 			session.setAttribute("loginid", loginid);
-			
-			// 아이디에 해당하는 프로필 사진 얻기
-			String photo = buddyMemberService.getSelectByUid(loginid).getUprofile();
-			session.setAttribute("loginphoto", photo);
 		}
 		map.put("result", b?"success":"fail");
 		
 		return map;
 	}
 	
-	// 로그아웃 추후 처리
+	// 로그아웃 처리
+	@GetMapping("/intro/logout")
+	public void memberLogout(HttpSession session)
+	{
+		session.removeAttribute("loginstatus");
+		session.removeAttribute("loginid");
+	}
 }

@@ -37,6 +37,7 @@ public class BuddyMemberService {
 		return buddyMemberMapper.getSelectByUid(uid);
 	}
 	
+	
 	public void insertBuddyBoard(BuddyMemberDto dto)
 	{
 		String uname = dto.getUname();

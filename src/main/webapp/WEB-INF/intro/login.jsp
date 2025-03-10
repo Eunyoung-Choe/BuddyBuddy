@@ -93,8 +93,9 @@ body {
 	
 </div>
 
-<!-- 로그인 동작 -->
+
 <script>
+	<!-- 로그인 동작 (로그인) -->
 	$("#loginform").submit(function(e){
 		e.preventDefault();
 		// alert("submit"); // 작동 OK
@@ -123,6 +124,7 @@ body {
 			}
 		});
 	});
+	
 	
 // 로그인 페이드인으로 시작
 window.onload = function() {

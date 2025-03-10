@@ -62,6 +62,16 @@ a:hover {
   z-index: -1; 
 }
 
+/* 오늘 하루 기분 이미지 */
+#changeImg {
+    margin-right: 6px;
+}
+
+/* 로그아웃 버튼 */
+.logoutbutton:hover {
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 /* 프로필 */
 .profilecontainer {
   position: absolute;
@@ -172,16 +182,28 @@ dl {
     border-bottom: none; 
 }
 </style>
-
 <script>
-
+	/* 왜 로그아웃이 안 될까 */
+	$("#logout").click(function(){
+		alert("submit");
+		$.ajax({
+			type:"get",
+			dataType:"text",
+			url:"${root}/intro/logout",
+			success:function(res){
+				window.location.href = "${root}/login";
+				alert("로그아웃 되었습니다.");
+			}else{
+				alert("로그아웃 실패");
+			}
+		});
+	});
 </script>
 
 </head>
-
 <body>
 <div class="container">
-<!-- 미니 포토 클릭 시 확대 모달  -->
+<!-- 미니 포토 클릭 시 확대 모달  =========================================-->
 <div class="modal" id="myMiniPhotoModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -195,12 +217,9 @@ dl {
       <div class="modal-body">
         <img src="" class="replelarge" id="largeImage" style="width: 100%;">
       </div>
-
-
     </div>
   </div>
 </div>
-
 
 	<!-- 네비게이션 ==================================================-->
 	<div class="navi">
@@ -214,6 +233,46 @@ dl {
 		<h6 style="margin-top:30px; font-size:17px;"> 게시판 </h6>
 		<h6 style="margin-top:31px; font-size:17px;"> 다이어리 </h6>
 		<h6 style="margin-top:29px; font-size:17px;"> 방명록 </h6>
+	</div>
+	
+	
+	<!-- 오늘 기분 선택 ========================================== -->
+	<div class="feeling" style="display:flex; align-items:center; position:absolute; top:153px; left:650px;">
+		<form action="">
+	        <select name="" id="changeImg" style="border:1px solid #77BB31;">
+	            <option value="./emoji/default.png">평범한 하루~</option>
+	            <option value="./emoji/smile.png">신난다!>ㅁ<</option>
+	            <option value="./emoji/sad.png">슬퍼ㅠ^ㅠ</option>
+	            <option value="./emoji/angry.png">화났어ㅡㅡ^</option>
+	            <option value="./emoji/upset.png">짜증나💢</option>
+	        </select>
+	    </form>
+	    <img id="myImg" src="./emoji/default.png" alt="default">
+	</div>
+ 	   
+    <script>
+        let changeimg = document.getElementById("changeImg");
+        let myImg = document.getElementById("myImg");
+
+        function changeImage(){
+            let index = changeimg.selectedIndex;
+            myImg.src = changeimg.options[index].value;
+        }
+        
+        changeImage();
+        changeimg.onchange = changeImage;
+    </script>
+	
+	
+	<!-- 로그아웃 ================================================-->
+	<div class="logout" style="position: absolute; width:80px; top:160px; left:1155px; font-size:16px;">
+		<a href="/login"> 로그아웃 </a> <!-- 임시 방편으로 일단 이동만... -->
+		
+		<!-- <c:if test="${sessionScope.loginstatus!=null}">
+			<button type="button" onclick="/login" class="logoutbutton" id="logout" style="border:1px solid gray; border-radius:7px; color:#575958;">
+				로그아웃
+			</button>  -->
+		</c:if>
 	</div>
 	
 	
@@ -262,8 +321,10 @@ dl {
 			<span style="color:#77BB31; font-size: 17px;">사진 앨범</span>
 			
 			<div class="miniphoto" style="display:flex;">
-				<img alt="miniphoto" src="/lobby/miniphoto${dto.num}.jpg" class="mini" id="largeImage1" style="width:45%; height: 90%; margin: 5px 20px 0 0;" data-bs-toggle="modal" data-bs-target="#myMiniPhotoModal">
-				<img alt="miniphoto" src="/lobby/miniphoto${dto.num}.png" class="mini" id="largeImage2" style="width:45%; height: 90%; margin-top:5px;" data-bs-toggle="modal">
+				<img alt="miniphoto" src="/lobby/miniphoto${dto.num}.jpg" class="mini" id="largeImage1" 
+					style="width:45%; height: 90%; margin: 5px 20px 0 0;" data-bs-toggle="modal" data-bs-target="#myMiniPhotoModal">
+				<img alt="miniphoto" src="/lobby/miniphoto${dto.num}.png" class="mini" id="largeImage2" 
+					style="width:45%; height: 90%; margin-top:5px;" data-bs-toggle="modal">
 			</div>
 		</div>
 		

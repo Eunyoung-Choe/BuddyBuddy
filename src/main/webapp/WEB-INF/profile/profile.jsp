@@ -49,6 +49,16 @@ a:hover {
   height: 100vh;
 }
 
+/* 오늘 하루 기분 이미지 */
+#changeImg {
+    margin-right: 6px;
+}
+
+/* 로그아웃 버튼 */
+.logoutbutton:hover {
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 /* 로비 배경 이미지(고정) */
 .lobby {
   background-image: url('/profile/profilebackground.png');
@@ -203,6 +213,46 @@ a:hover {
 		<h6 style="margin-top:29px; font-size:17px;"> 방명록 </h6>
 	</div>
 
+
+	<!-- 오늘 기분 선택 ========================================== -->
+	<div class="feeling" style="display:flex; align-items:center; position:absolute; top:153px; left:650px;">
+		<form action="">
+	        <select name="" id="changeImg" style="border:1px solid #77BB31;">
+	            <option value="./emoji/default.png">평범한 하루~</option>
+	            <option value="./emoji/smile.png">신난다!>ㅁ<</option>
+	            <option value="./emoji/sad.png">슬퍼ㅠ^ㅠ</option>
+	            <option value="./emoji/angry.png">화났어ㅡㅡ^</option>
+	            <option value="./emoji/upset.png">짜증나💢</option>
+	        </select>
+	    </form>
+	    <img id="myImg" src="./emoji/default.png" alt="default">
+	</div>
+ 	   
+    <script>
+        let changeimg = document.getElementById("changeImg");
+        let myImg = document.getElementById("myImg");
+
+        function changeImage(){
+            let index = changeimg.selectedIndex;
+            myImg.src = changeimg.options[index].value;
+        }
+        
+        changeImage();
+        changeimg.onchange = changeImage;
+    </script>
+    
+
+	<!-- 로그아웃 ================================================-->
+	<div class="logout" style="position: absolute; width:80px; top:160px; left:1155px; font-size:16px;">
+		<a href="/login"> 로그아웃 </a> <!-- 임시 방편으로 일단 이동만... -->
+		
+		<!-- <c:if test="${sessionScope.loginstatus!=null}">
+			<button type="button" onclick="/login" class="logoutbutton" id="logout" style="border:1px solid gray; border-radius:7px; color:#575958;">
+				로그아웃
+			</button>  -->
+		</c:if>
+	</div>
+
 	
 	<!-- (왼쪽) 버디바디 ===================================================-->
 	<div class="leftcontainer">
@@ -274,15 +324,47 @@ a:hover {
     document.getElementById("photoUpload").addEventListener("change", function(event) {
         const file = event.target.files[0];  // 선택한 파일 가져오기
         if (file) {
-            const reader = new FileReader();
+            
+        	const reader = new FileReader();
             reader.onload = function(e) {
                 const previewImage = document.getElementById("previewImage");
                 previewImage.src = e.target.result;
                 previewImage.style.display = "block";  // 이미지 보이게 변경
             };
             reader.readAsDataURL(file); // 파일을 읽어 Data URL로 변환
+
+            uploadFile(file);
         }
     });
+    
+    var uploadfileName = ''
+    
+    function uploadFile(file){
+        const formData = new FormData();
+        
+        // FormData에 파일 추가
+        formData.append("profileImage", file);
+        
+        $.ajax({
+            url: "/profile",  // 서버의 업로드 처리 경로로 변경해야 합니다
+            type: "POST",
+            data: formData,
+            processData: false,  // FormData 처리 방지
+            contentType: false,  // 컨텐츠 타입 자동 설정 방지
+            success: function(response) {
+                console.log("파일 업로드 성공!");
+                console.log("서버 응답:", response);
+                // 성공 시 추가 처리 코드
+                
+                uploadfileName = response
+            },
+            error: function(xhr, status, error) {
+                console.error("파일 업로드 실패:", error);
+                // 실패 시 처리 코드
+            }
+        });	
+    }
+    
 </script>
 </body>
 </html>
