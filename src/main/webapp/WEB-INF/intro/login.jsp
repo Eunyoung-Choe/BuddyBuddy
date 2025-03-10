@@ -77,6 +77,11 @@ body {
 <body>
 <div class="container">
 
+	<!-- 배경 음악 자동 출력 -->
+	<audio id="bgm" autoplay loop>
+        <source src="login/Love.mp3" type="audio/mpeg">
+    </audio>
+
 	<!-- 아이디, 비밀번호 입력란 -->	
 	<div class="logininputcontainer">
 		<form id="loginform">
